@@ -1,5 +1,6 @@
 ﻿@page "/shoppinglist"
 @using FirstBlazorApp.Data
+<PageTitle>@_title</PageTitle>
 
 <h3>ShoppingList</h3>
 
@@ -14,19 +15,22 @@
     }
 </ul>
 
-<h1>Total : @groceries.Sum(g => g.Price) €</h1>
+<h1>Total : @_sum €</h1>
 
 
 
 @code {
+    private string _title = "Liste de courses";
     private string _groceryName;
     private float _groceryPrice;
+    private float _sum = 0;
 
     private void AddGroceries()
     {
         if(!string.IsNullOrWhiteSpace(_groceryName) && _groceryPrice > 0)
         {
             groceries.Add(new Grocery { Name = _groceryName, Price = _groceryPrice });
+            _sum += _groceryPrice;
             _groceryName = string.Empty;
             _groceryPrice = 0;
         }
